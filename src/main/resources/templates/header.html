@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit book</title>
+</head>
+<body>
+<div style="background-color: aliceblue">
+    <h2>Our Library</h2>
+
+    <form action="/auth/login">
+        <input type="submit" value="LogIn"/>
+    </form>
+
+    <form th:action="@{/logout}" th:method="POST">
+        <input type="submit" value="LogOut" style="margin-top: 5px" />
+    </form>
+
+    <form method="GET" action="/people">
+        <input type="submit" value="Clients" style="margin-top: 5px"/>
+    </form>
+    <button onclick="document.location='/books?page=0&books_per_page=3'" style="margin-top: 5px">Books</button>
+    <hr/>
+</div>
+</body>
+</html>

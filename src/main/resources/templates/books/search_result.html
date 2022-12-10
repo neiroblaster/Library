@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Result</title>
+</head>
+<body>
+
+<div th:insert="/header"></div>
+
+<div th:insert="/books/search"></div>
+
+<div th:if="${books}">
+    <div th:each="book : ${books}">
+        <a th:href="@{/books/{id}(id=${book.getId()})}"
+           th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
+    </div>
+</div>
+<div  th:if="${not books.isEmpty()}">
+    <hr/>
+            <div th:if="${books.get(0).getOwner()}">
+                <span>This book is lent to: </span>
+                <a th:href="@{/people/{id}(id=${books.get(0).getOwner().getId()})}"
+                     th:text="${books.get(0).getOwner().getName()}">owner</a>
+            </div>
+            <div th:unless="${books.get(0).getOwner()}">
+                <span>This book is free</span>
+            </div>
+</div>
+<div th:if="${books.isEmpty()}">
+    <hr/>
+    <span>There is no such books</span>
+</div>
+
+</body>
+</html>
