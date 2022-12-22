@@ -1,0 +1,50 @@
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: aliceblue;
+    padding-bottom: 10px;
+}
+
+.container h2{
+    margin: 10px 0 10px 10px;
+}
+
+.row  {
+    display: flex;
+    height: 45px;
+     background-color: black;
+}
+
+.row-left {
+    display: flex;
+    height: 45px;
+    justify-content: flex-start;
+    width: 50%;
+}
+
+.row-right {
+    display: flex;
+    height: 45px;
+    justify-content: flex-end;
+    width: 50%;
+}
+
+.btn {
+    background: black;
+    height: 45px;
+    padding: 15px 20px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover{
+    opacity: 0.9;
+    color: aqua;
+}
+
+.white-space{
+    height: 113px;
+}
