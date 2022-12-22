@@ -2,7 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration page</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
 </head>
 <body>
 
@@ -22,7 +25,7 @@
     <div style="color: red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" >
         Password error</div>
     <br/>
-    <input type="submit" value="Sign Up"/>
+    <input class="btn" type="submit" value="Sign Up"/>
 </form>
 
 </body>

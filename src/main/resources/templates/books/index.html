@@ -1,26 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/pagination.css"/>
 </head>
 <body>
+<div>
+    <div th:insert="/header"></div>
 
-<div th:insert="/header"></div>
+<!--    Список книг с пагинацией-->
+    <ul style="min-height: 200px">
+        <li th:each="book : ${pageOfBooks.getContent()}">
+            <a th:href="@{/books/{id}(id=${book.getId()})}"
+               th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></a>
+        </li>
+    </ul>
 
-<div th:each="book : ${books}">
-    <a th:href="@{/books/{id}(id=${book.getId()})}"
-    th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</a>
+<!--    Нумерация страниц-->
+    <ul class="pagination" th:if="${pageOfBooks.getTotalPages() > 1}">
+<!--        Кнопка Previous-->
+        <li>
+            <a th:href="@{/books(page=${pageOfBooks.getNumber()-1}, itemsPerPage=${pageOfBooks.getSize()})}"
+               th:text="Previous"
+               th:class="${!pageOfBooks.hasPrevious()} ? 'disabled' : 'page-link'"
+            ></a>
+        </li>
+<!--        Номер страницы-->
+        <li th:each="pageNumber : ${pageNumbers}">
+            <a th:href="@{/books(page=${pageNumber}, itemsPerPage=${pageOfBooks.getSize()})}"
+               th:text="${pageNumber + 1}"
+               th:class="${pageNumber == pageOfBooks.getNumber()} ? 'disabled' : 'page-link'"
+            ></a>
+        </li>
+<!--        Кнопка Next-->
+        <li>
+            <a th:href="@{/books(page=${pageOfBooks.getNumber()+1}, itemsPerPage=${pageOfBooks.getSize()})}"
+               th:text="Next"
+               th:class="${!pageOfBooks.hasNext()} ? 'disabled' : 'page-link'"
+            ></a>
+        </li>
+    </ul>
+<!--    Пачки страниц-->
+    <ul class="pagination">
+        <li th:each="batch : ${batchOfPageNumbers}">
+            <a th:href="@{/books(page=${pageOfBooks.getNumber()}, itemsPerPage=${batch}, fromBatch=true)}"
+               th:text="${batch}"
+               th:class="${batch == pageOfBooks.getSize()} ? 'disabled' : 'page-link'"
+            ></a>
+        </li>
+    </ul>
+
+    <hr/>
+
+    <form method="GET" action="/books/new">
+        <input class="btn" type="submit" value="Add book">
+    </form>
+    <button class="btn" onclick="document.location='/books?page=0&books_per_page=6&sort_by_year=year'"
+            style="margin-top: 5px">Books sort by year
+    </button>
+    <hr/>
+    <div th:insert="/books/search"></div>
 </div>
-<br/>
-<hr/>
-
-<form method="GET" action="/books/new">
-    <input type="submit" value="Add book">
-</form>
-<button onclick="document.location='/books?page=0&books_per_page=3&sort_by_year=year'" style="margin-top: 5px" >Books sort by year</button>
-<hr/>
-<div th:insert="/books/search"></div>
-
 </body>
 </html>

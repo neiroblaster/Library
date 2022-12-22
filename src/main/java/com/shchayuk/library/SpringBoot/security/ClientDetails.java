@@ -3,9 +3,11 @@ package com.shchayuk.library.SpringBoot.security;
 import com.shchayuk.library.SpringBoot.models.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class ClientDetails implements UserDetails {
 
@@ -18,7 +20,9 @@ public class ClientDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        // здесь можно передавать также коллекцию действий, например:
+        // SHOW_ACCOUNT, WITHDRAW_MONEY, SEND_MONEY, ...
+        return Collections.singletonList(new SimpleGrantedAuthority(client.getRole()));
     }
 
     @Override

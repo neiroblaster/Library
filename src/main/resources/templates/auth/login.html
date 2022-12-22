@@ -2,9 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login page</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
 </head>
 <body>
+
 <form name="f" method="POST" action="/process_login">
 
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -15,7 +19,7 @@
     <label for="password">Enter your password: </label>
     <input type="password" name="password" id="password"/>
     <br/>
-    <input type="submit" value="LogIn"/>
+    <input class="btn" type="submit" value="LogIn"/>
 
     <div th:if="${param.error}" style="color: red">
         Wrong login or password
@@ -23,7 +27,7 @@
 </form>
 
 <form action="/auth/registration">
-    <input type="submit" value="Register" style="margin-top: 5px" />
+    <input class="btn"  type="submit" value="Register" style="margin-top: 5px" />
 </form>
 
 </body>

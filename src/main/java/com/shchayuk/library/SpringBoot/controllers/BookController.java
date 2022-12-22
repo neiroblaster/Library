@@ -4,13 +4,20 @@ import com.shchayuk.library.SpringBoot.models.Book;
 import com.shchayuk.library.SpringBoot.models.Person;
 import com.shchayuk.library.SpringBoot.servicies.BookService;
 import com.shchayuk.library.SpringBoot.servicies.PersonService;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.*;
+import java.util.stream.IntStream;
 
 
 @Controller
@@ -27,7 +34,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public String search(Model model, @ModelAttribute("pattern") String pattern){
+    public String search(Model model, @ModelAttribute("pattern") String pattern) {
         model.addAttribute("pattern", pattern);
         return "books/search";
     }
@@ -35,7 +42,7 @@ public class BookController {
     @PostMapping("/search/result")
     public String searchResult(Model model,
                                @RequestParam(value = "pattern", required = false) String pattern,
-                               RedirectAttributes redirectAttributes){
+                               RedirectAttributes redirectAttributes) {
         model.addAttribute("books", bookService.findByNameIsStartingWith(pattern));
         redirectAttributes.addAttribute("pattern", pattern);
 
@@ -43,33 +50,50 @@ public class BookController {
     }
 
     @GetMapping()
-    public String index(Model model){
-        model.addAttribute("books", bookService.findAll());
+    public String indexWithPagination(
+            Model model, @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "itemsPerPage", required = false, defaultValue = "10") Integer itemsPerPage,
+            @RequestParam(value = "fromBatch", required = false, defaultValue = "false") Boolean fromBatch
+    ) {
+//
+        Page<Book> pageOfBooks = bookService.findAll(PageRequest.of(page, itemsPerPage), fromBatch);
+
+        model.addAttribute("pageOfBooks", pageOfBooks);
+        model.addAttribute("pageNumbers",
+                IntStream.range(0, pageOfBooks.getTotalPages()).toArray());
+        model.addAttribute("batchOfPageNumbers", bookService.getBatchOfPageNumbers());
+
         return "books/index";
     }
 
-    @GetMapping(params = {"page", "books_per_page"})
-    public String index(Model model, @RequestParam(value = "page") int page,
-                        @RequestParam(value = "books_per_page") int itemsPerPage) {
+//    @GetMapping()
+//    public String index(Model model){
+//        model.addAttribute("books", bookService.findAll());
+//        return "books/index";
+//    }
+//
+//    @GetMapping( params = {"page", "books_per_page"})
+//    public String index(Model model, @RequestParam(value = "page") int page,
+//                        @RequestParam(value = "books_per_page") int itemsPerPage) {
+//
+//        model.addAttribute("books", bookService.findAll(page, itemsPerPage));
+//        return "books/index";
+//    }
+//
+//    @GetMapping(params = {"sort_by_year"})
+//    public String index(Model model, @RequestParam(value = "sort_by_year") String year) {
+//        model.addAttribute("books", bookService.findAll(year));
+//        return "books/index";
+//    }
 
-        model.addAttribute("books", bookService.findAll(page, itemsPerPage));
-        return "books/index";
-    }
-
-    @GetMapping(params = {"sort_by_year"})
-    public String index(Model model, @RequestParam(value = "sort_by_year") String year) {
-        model.addAttribute("books", bookService.findAll(year));
-        return "books/index";
-    }
-
-    @GetMapping(params = {"page", "books_per_page", "sort_by_year"})
-    public String index(Model model, @RequestParam(value = "page") int page,
-                        @RequestParam(value = "books_per_page") int itemsPerPage,
-                        @RequestParam(value = "sort_by_year") String year) {
-
-        model.addAttribute("books", bookService.findAll(page, itemsPerPage, year));
-        return "books/index";
-    }
+//    @GetMapping(params = {"page", "books_per_page", "sort_by_year"})
+//    public String index(Model model, @RequestParam(value = "page") int page,
+//                        @RequestParam(value = "books_per_page") int itemsPerPage,
+//                        @RequestParam(value = "sort_by_year") String year) {
+//
+//        model.addAttribute("books", bookService.findAll(page, itemsPerPage, year));
+//        return "books/index";
+//    }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model,

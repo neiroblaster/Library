@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Show book</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
 </head>
 <body>
 
@@ -16,7 +17,7 @@
        th:text="${owner.getName()}" id="owner">owner</a>
 <!--    <p th:text="${owner.getName()}" id="owner"></p>-->
     <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
-        <input type="submit" value="Release"/>
+        <input class="btn" type="submit" value="Release"/>
     </form>
 </div>
 
@@ -27,15 +28,15 @@
             <option th:each="person : ${people}" th:value="${person.id}"
                     th:text="${person.getName()}"></option>
         </select>
-        <input type="submit" value="Lend the book to this person"/>
+        <input class="btn" type="submit" value="Lend the book to this person"/>
     </form>
 </div>
 <hr>
 <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
-    <input type="submit" value="Update book"/>
+    <input class="btn" type="submit" value="Update book"/>
 </form>
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
-    <input type="submit" value="Delete book" style="margin-top: 5px" />
+    <input class="btn" type="submit" value="Delete book" style="margin-top: 5px" />
 </form>
 
 </body>

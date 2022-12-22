@@ -1,0 +1,33 @@
+.pagination{
+    display: flex;
+    box-sizing: border-box;
+    padding: 10px;
+    width: fit-content;
+}
+
+.pagination li{
+    list-style: none;
+    /* display: flex; */
+}
+
+.page-link{
+    margin: 2px;
+    padding: 5px 10px;
+    text-decoration: none;
+    background-color: black;
+    color: white;
+}
+
+.page-link:hover{
+    opacity: 0.9;
+    color: aqua
+}
+
+.disabled{
+    margin: 2px;
+    padding: 5px 10px;
+    text-decoration: none;
+    background-color: rgb(240, 240, 240);
+    color: black;
+    pointer-events: none;
+}

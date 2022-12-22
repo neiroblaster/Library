@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit person</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
 </head>
 <body>
 
@@ -15,7 +16,7 @@
     <input type="text" th:field="*{year}" id="year"/>
     <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year error</div>
     <br>
-    <input type="submit" value="Update">
+    <input class="btn" type="submit" value="Update">
 </form>
 
 </body>

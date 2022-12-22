@@ -2,7 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search books</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
 </head>
 <body>
 
@@ -11,7 +14,7 @@
     <br/>
     <input type="text" name="pattern" th:value="${pattern}" id="pattern"/>
     <br/>
-    <input type="submit" value="search" style="margin-top: 5px" />
+    <input class="btn" type="submit" value="search" style="margin-top: 5px" />
 </form>
 
 </body>

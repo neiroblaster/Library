@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit book</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/button.css"/>
+
 </head>
 <body>
 
@@ -19,7 +21,7 @@
     <input type="text" th:field="*{year}" id="year"/>
     <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" >Name error</div>
     <br>
-    <input type="submit" value="Update book" style="margin-top:5px"/>
+    <input class="btn" type="submit" value="Update book" style="margin-top:5px"/>
 </form>
 
 </body>
